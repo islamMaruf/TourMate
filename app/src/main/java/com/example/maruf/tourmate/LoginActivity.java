@@ -49,10 +49,12 @@ public class LoginActivity extends AppCompatActivity {
         if(!validateEmail() | !validatePassword()){
             return;
         }
-        Toast.makeText(this, "data valid", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        startActivity(intent);
+        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
     }
 
-    private boolean validateEmail(){
+    public boolean validateEmail(){
         String emailInput = emailTextInput.getEditText().getText().toString().trim();
         if(emailInput.isEmpty()){
             emailTextInput.setError("Field can not be empty");
@@ -67,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validatePassword(){
+    public boolean validatePassword(){
      String passwordInput = passwordTextInput.getEditText().getText().toString().trim();
      if(passwordInput.isEmpty()){
          passwordTextInput.setError("Field can not be empty");

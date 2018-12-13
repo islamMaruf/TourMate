@@ -2,11 +2,19 @@
 <resources>
     <color name="colorPrimary">#F44336</color>
     <color name="colorPrimaryDark">#D32F2F</color>
-    <color name="colorAccent">#FF5252</color>
+    <color name="colorAccent">#FFEBEE</color>
     <color name="colorLightPrimary">#FFCDD2</color>
     <color name="colorText">#FFFFFF</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
+
+    <color name="colorWeatherPrimaryDark">#c67c00</color>
+    <color name="colorWeatherPrimary">#ffab00</color>
+
+    <color name="colorNearByPrimaryDark">#0026ca</color>
+    <color name="colorNearbyPrimary">#304ffe</color>
+
+
 
 
 
