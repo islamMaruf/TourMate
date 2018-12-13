@@ -1,17 +1,22 @@
 package com.example.maruf.tourmate;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -20,6 +25,10 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout emailTextInput;
     private TextInputLayout passwordTextInput;
     private AppCompatButton login;
+    private FirebaseAuth firebaseAuth;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         emailTextInput = findViewById(R.id.input_email);
         passwordTextInput = findViewById(R.id.input_password);
         login = findViewById(R.id.btn_login);
+        firebaseAuth = FirebaseAuth.getInstance();
         signUpTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,19 +49,53 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                confirmInput();
+                if(!validateEmail() | !validatePassword()){
+                    return;
+                }
+                String password = passwordTextInput.getEditText().getText().toString().trim();
+                String email = emailTextInput.getEditText().getText().toString().trim();
+                signInWithEmailAndPassword(email,password);
             }
         });
-
+        if (firebaseAuth.getCurrentUser()!=null){
+            gotToHome();
         }
 
-    private void confirmInput() {
-        if(!validateEmail() | !validatePassword()){
-            return;
-        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        System.exit(0);
+    }
+
+    private void gotToHome() {
         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
+    }
+
+
+
+    private void signInWithEmailAndPassword(String email,String password) {
+        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Authenticating....");
+        progressDialog.show();
+        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    progressDialog.dismiss();
+                    Toasty.info(LoginActivity.this,"Welcome Back",Toast.LENGTH_SHORT,false).show();
+                    gotToHome();
+                    }else{
+                    Toasty.warning(LoginActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT,false).show();
+                    progressDialog.dismiss();
+                }
+
+            }
+        });
     }
 
     public boolean validateEmail(){
@@ -70,11 +114,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean validatePassword(){
-     String passwordInput = passwordTextInput.getEditText().getText().toString().trim();
-     if(passwordInput.isEmpty()){
+        String passwordInput = passwordTextInput.getEditText().getText().toString().trim();
+        if(passwordInput.isEmpty()){
          passwordTextInput.setError("Field can not be empty");
          return false;
-     }else if(passwordInput.length()<6) {
+     }else if(passwordInput.length() < 6) {
          passwordTextInput.setError("Password length must be greater than 6");
         return false;
      }else{
@@ -82,9 +126,5 @@ public class LoginActivity extends AppCompatActivity {
          return true;
      }
     }
-
-
-
-
 
 }
