@@ -33,7 +33,10 @@
     <color name="base">#AAAAAA</color>
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
-
+    <color name="color_weather">#FFFF00</color>
+    <color name="colorWeatherDayOne">#FF6D00</color>
+    <color name="colorWeatherDayTwo">#FF9100</color>
+    <color name="colorWeatherDayThree">#FFAB40</color>
 
 
 

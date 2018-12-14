@@ -31,8 +31,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.CustomViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-        EventCreate currentEvent = eventCreateList.get(position);
+    public void onBindViewHolder(@NonNull CustomViewHolder holder, int i) {
+        EventCreate currentEvent = eventCreateList.get(i);
         holder.eventName.setText(currentEvent.getEventName());
         holder.fromDate.setText(currentEvent.getFromDate());
         holder.toDate.setText(currentEvent.getToDate());
