@@ -12,7 +12,7 @@
                 android:topLeftRadius="70dp"
                 android:bottomRightRadius="70dp"/>
             <size
-                android:height="30dp"/>
+                android:height="20dp"/>
             <solid
                 android:color="@color/colorPrimaryDark"/>
         </shape>
@@ -27,7 +27,7 @@
                 android:topLeftRadius="70dp"
                 android:bottomRightRadius="70dp"/>
             <size
-                android:height="30dp"/>
+                android:height="20dp"/>
             <solid
                 android:color="@color/colorPrimaryDark"/>
         </shape>

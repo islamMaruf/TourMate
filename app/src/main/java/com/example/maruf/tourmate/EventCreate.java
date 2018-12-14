@@ -22,7 +22,11 @@ public class EventCreate {
         return estimatedBudget;
     }
 
+    public EventCreate() {
+    }
+
     public EventCreate(String eventName, String fromDate, String toDate, String estimatedBudget) {
+
         this.eventName = eventName;
         this.fromDate = fromDate;
         this.toDate = toDate;
