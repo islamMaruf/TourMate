@@ -1,4 +1,4 @@
-package com.example.maruf.tourmate;
+package com.example.maruf.tourMateApplication;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,4 +1,4 @@
-package com.example.maruf.tourmate;
+package com.example.maruf.tourMateApplication;
 
 import org.junit.Test;
 

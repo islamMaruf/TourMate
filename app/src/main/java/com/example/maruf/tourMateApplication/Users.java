@@ -1,4 +1,4 @@
-package com.example.maruf.tourmate;
+package com.example.maruf.tourMateApplication;
 
 public class Users {
     public String userEmail;

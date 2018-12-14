@@ -1,4 +1,4 @@
-package com.example.maruf.tourmate;
+package com.example.maruf.tourMateApplication;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
