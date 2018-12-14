@@ -1,22 +1,103 @@
 package com.example.maruf.tourmate;
 
 import android.os.Bundle;
+
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class EventFragment extends Fragment {
 
+    private FloatingActionButton openBottomsheetBtn;
+    private EditText eventNameEt,fromDateEt,toDateEt,esatimateBudgetEt;
+    private Button addEventEt;
+    private FirebaseAuth firebaseAuth;
+    private String userId;
+    BottomSheetDialog bottomSheetDialog;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_event, container, false);
+        View view = inflater.inflate(R.layout.fragment_event, container, false);
+
+        openBottomsheetBtn = view.findViewById(R.id.openBottomSheet);
+        openBottomsheetBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialog = new BottomSheetDialog(getActivity());
+                View sheetView = getLayoutInflater().inflate(R.layout.bottom_sheet_layout,null);
+                bottomSheetDialog.setContentView(sheetView);
+                bottomSheetDialog.show();
+                eventNameEt = sheetView.findViewById(R.id.eventET);
+                fromDateEt = sheetView.findViewById(R.id.fromDateEt);
+                toDateEt = sheetView.findViewById(R.id.toDateEt);
+                esatimateBudgetEt = sheetView.findViewById(R.id.estimatebudgetEt);
+                addEventEt = sheetView.findViewById(R.id.addEvent);
+                addEventEt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        validationAndSend();
+                    }
+                });
+            }
+        });
+
+
+
+
+
+
+
+
+
+        return view;
+    }
+
+    private void validationAndSend() {
+        String eventName = eventNameEt.getText().toString();
+        String fromDate = fromDateEt.getText().toString();
+        String toDate = toDateEt.getText().toString();
+        String budget = esatimateBudgetEt.getText().toString();
+        if(!eventName.isEmpty() || !fromDate.isEmpty() || !toDate.isEmpty() || !budget.isEmpty()){
+            saveEventToDatabase(eventName,fromDate,toDate,budget);
+        }else{
+            Toasty.warning(getActivity(),"Please fill all the field",Toast.LENGTH_SHORT,false).show();
+        }
+    }
+
+    private void saveEventToDatabase(String eventName,String fromDate,String toDate,String budget) {
+        EventCreate eventDetails = new EventCreate(eventName,fromDate,toDate,budget);
+        firebaseAuth = FirebaseAuth.getInstance();
+        userId = firebaseAuth.getCurrentUser().getUid();
+        DatabaseRef.userRef.child(userId).child("Events").push().setValue(eventDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    bottomSheetDialog.dismiss();
+                    Toasty.info(getActivity(),"Event Created Successfully",Toast.LENGTH_SHORT,false).show();
+                }else {
+                    Toasty.warning(getActivity(),task.getException().getMessage(),Toast.LENGTH_SHORT,false).show();
+                    bottomSheetDialog.dismiss();
+                }
+            }
+        });
+
     }
 
 
