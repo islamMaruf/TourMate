@@ -1,7 +1,9 @@
 package com.example.maruf.tourMateApplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.CustomViewHolder> {
     private Context context;
@@ -27,16 +31,26 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.CustomViewHo
     public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.event_list_recycler_view, viewGroup, false);
+
         return new CustomViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int i) {
-        EventCreate currentEvent = eventCreateList.get(i);
+        final EventCreate currentEvent = eventCreateList.get(i);
         holder.eventName.setText(currentEvent.getEventName());
         holder.fromDate.setText(currentEvent.getFromDate());
         holder.toDate.setText(currentEvent.getToDate());
-        holder.estimateBudget.setText(currentEvent.getEstimatedBudget());
+        holder.estimateBudget.setText(currentEvent.getEstimatedBudget() +" Tk");
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,EventDetails.class);
+                intent.putExtra("event",currentEvent.getEventName());
+                context.startActivity(intent);
+
+            }
+        });
 
 
 
@@ -49,13 +63,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.CustomViewHo
 
     public class CustomViewHolder extends RecyclerView.ViewHolder{
         private TextView eventName,fromDate,toDate,estimateBudget;
+        private CardView cardView;
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
             eventName = itemView.findViewById(R.id.eventDestinationTv);
             fromDate = itemView.findViewById(R.id.eventStartTv);
             toDate = itemView.findViewById(R.id.eventEndTv);
             estimateBudget = itemView.findViewById(R.id.estimateBudgetTv);
-
+            cardView = itemView.findViewById(R.id.eventDetailCV);
 
 
         }

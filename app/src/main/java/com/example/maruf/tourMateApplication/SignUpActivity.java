@@ -69,6 +69,7 @@ public class SignUpActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(SignUpActivity.this,R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Registering....");
+        progressDialog.setCanceledOnTouchOutside(true);
         progressDialog.show();
         firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

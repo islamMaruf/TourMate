@@ -1,5 +1,6 @@
 package com.example.maruf.tourMateApplication;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -39,6 +40,7 @@ public class EventFragment extends Fragment {
     private EventAdapter eventAdapter;
     private  List<EventCreate>eventList;
     private RecyclerView recyclerView;
+    private ProgressDialog progressDialog;
 
 
 
@@ -52,7 +54,11 @@ public class EventFragment extends Fragment {
         userId = firebaseAuth.getCurrentUser().getUid();
         recyclerView = view.findViewById(R.id.recyclerViewId);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        progressDialog = new ProgressDialog(getActivity(),R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Loading");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
         loadEventListFromDatabase();
         eventAdapter = new EventAdapter(getActivity(),eventList);
         recyclerView.setAdapter(eventAdapter);
@@ -70,6 +76,9 @@ public class EventFragment extends Fragment {
                 toDateEt = sheetView.findViewById(R.id.toDateEt);
                 esatimateBudgetEt = sheetView.findViewById(R.id.estimatebudgetEt);
                 addEventEt = sheetView.findViewById(R.id.addEvent);
+                DatePicker date = new DatePicker();
+                date.datePicker(fromDateEt,getActivity());
+                date.datePicker(toDateEt,getActivity());
                 addEventEt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -96,7 +105,10 @@ public class EventFragment extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 EventCreate eventCreate = dataSnapshot.getValue(EventCreate.class);
                 eventList.add(eventCreate);
+                progressDialog.dismiss();
                 eventAdapter.notifyDataSetChanged();
+
+
             }
 
             @Override
@@ -123,14 +135,17 @@ public class EventFragment extends Fragment {
     }
 
     private void validationAndSend() {
+
         String eventName = eventNameEt.getText().toString();
         String fromDate = fromDateEt.getText().toString();
         String toDate = toDateEt.getText().toString();
         String budget = esatimateBudgetEt.getText().toString();
-        if(!eventName.isEmpty() || !fromDate.isEmpty() || !toDate.isEmpty() || !budget.isEmpty()){
-            saveEventToDatabase(eventName,fromDate,toDate,budget);
-        }else{
+        if(eventName.isEmpty() || fromDate.isEmpty() || toDate.isEmpty() || budget.isEmpty()){
             Toasty.warning(getActivity(),"Please fill all the field",Toast.LENGTH_SHORT,false).show();
+        }else{
+            saveEventToDatabase(eventName,fromDate,toDate,budget);
+            Toasty.info(getActivity(),"Event created",Toast.LENGTH_SHORT,false).show();
+
         }
     }
 
