@@ -24,9 +24,10 @@ public class EventDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String toolbarName = intent.getStringExtra("eventName");
         String eventId = intent.getStringExtra("eventId");
-        String budget = intent.getStringExtra("budget");
+        String budget = intent.getStringExtra("eventBudget");
         Bundle bundle = new Bundle();
         bundle.putString("id",eventId);
+        bundle.putString("budgetId",budget);
         eToolbar = findViewById(R.id.eventToolbar);
         eToolbar.setTitle(toolbarName);
         setSupportActionBar(eToolbar);

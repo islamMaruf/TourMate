@@ -50,6 +50,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.CustomViewHo
                 Intent intent = new Intent(context,EventDetailsActivity.class);
                 intent.putExtra("eventName",currentEvent.getEventName());
                 intent.putExtra("eventId",currentEvent.getId());
+                intent.putExtra("eventBudget",currentEvent.getEstimatedBudget());
                 context.startActivity(intent);
 
             }
