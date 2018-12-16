@@ -1,4 +1,4 @@
-package com.example.maruf.tourMateApplication;
+package com.example.maruf.tourMateApplication.OtherClass;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;

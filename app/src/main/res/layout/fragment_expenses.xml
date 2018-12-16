@@ -1,22 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragments.EventFragment">
-    <android.support.v7.widget.RecyclerView
+    android:orientation="vertical"
+    tools:context=".Fragments.ExpensesFragment">
+    <LinearLayout
+        android:background="@color/colorPrimary"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recyclerViewId"
+        android:weightSum="2"
+        android:id="@+id/linearLayout"
+        >
+        <TextView
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="21sp"
+            android:layout_weight="1"
+            android:text="Expense Name"
+            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="21sp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:text="Expense Details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/expensesRecyclerView"
         >
 
     </android.support.v7.widget.RecyclerView>
     <com.github.clans.fab.FloatingActionMenu
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/eventFloatAction"
+        android:id="@+id/expenseFloatAction"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -29,7 +62,7 @@
         app:menu_showShadow="true"
         >
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/openBottomSheet"
+            android:id="@+id/openBottomSheetExpense"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
@@ -39,11 +72,13 @@
             app:fab_size="mini"
             app:fab_showAnimation="@anim/fab_scale_up"
             app:fab_hideAnimation="@anim/fab_scale_down"
-            app:fab_label="Create Event"
+            app:fab_label="Add Expense"
             />
 
 
 
     </com.github.clans.fab.FloatingActionMenu>
+
+
 
 </RelativeLayout>

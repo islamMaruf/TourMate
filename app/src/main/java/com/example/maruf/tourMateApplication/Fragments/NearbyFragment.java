@@ -1,4 +1,4 @@
-package com.example.maruf.tourMateApplication;
+package com.example.maruf.tourMateApplication.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,21 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.maruf.tourMateApplication.R;
 
- public class MemorablePlacesFragment extends Fragment {
+
+public class NearbyFragment extends Fragment {
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_memorable_places, container, false);
+        return inflater.inflate(R.layout.fragment_nearby, container, false);
     }
-
-
-
-
-
-
 
 
 }

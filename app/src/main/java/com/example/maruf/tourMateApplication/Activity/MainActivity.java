@@ -1,4 +1,4 @@
-package com.example.maruf.tourMateApplication;
+package com.example.maruf.tourMateApplication.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
+import com.example.maruf.tourMateApplication.Adapter.PageAdapter;
+import com.example.maruf.tourMateApplication.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private TabItem tabNearby;
     private TabItem tabWeather;
     private TabItem tabEvent;
-    private  PageAdapter pageAdapter;
+    private PageAdapter pageAdapter;
 
 
     @Override

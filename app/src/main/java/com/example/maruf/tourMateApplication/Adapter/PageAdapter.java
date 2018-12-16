@@ -1,8 +1,12 @@
-package com.example.maruf.tourMateApplication;
+package com.example.maruf.tourMateApplication.Adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.example.maruf.tourMateApplication.Fragments.EventFragment;
+import com.example.maruf.tourMateApplication.Fragments.NearbyFragment;
+import com.example.maruf.tourMateApplication.Fragments.WeatherFragment;
 
 public class PageAdapter extends FragmentPagerAdapter {
     private int numberOfTabs;

@@ -1,4 +1,4 @@
-package com.example.maruf.tourMateApplication;
+package com.example.maruf.tourMateApplication.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.maruf.tourMateApplication.R;
 
 import es.dmoral.toasty.Toasty;
 

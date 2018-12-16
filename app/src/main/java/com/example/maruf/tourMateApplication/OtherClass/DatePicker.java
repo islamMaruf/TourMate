@@ -1,4 +1,4 @@
-package com.example.maruf.tourMateApplication;
+package com.example.maruf.tourMateApplication.OtherClass;
 
 import android.app.DatePickerDialog;
 import android.content.Context;

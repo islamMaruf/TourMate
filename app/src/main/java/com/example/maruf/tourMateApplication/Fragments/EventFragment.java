@@ -1,9 +1,8 @@
-package com.example.maruf.tourMateApplication;
+package com.example.maruf.tourMateApplication.Fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,13 +14,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.maruf.tourMateApplication.Adapter.EventAdapter;
+import com.example.maruf.tourMateApplication.OtherClass.DatabaseRef;
+import com.example.maruf.tourMateApplication.OtherClass.DatePicker;
+import com.example.maruf.tourMateApplication.ProjoPackage.EventCreates;
+import com.example.maruf.tourMateApplication.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +40,10 @@ public class EventFragment extends Fragment {
     private Button addEventEt;
     private FirebaseAuth firebaseAuth;
     private String userId;
-    BottomSheetDialog bottomSheetDialog;
+    private String eventId;
+    private BottomSheetDialog bottomSheetDialog;
     private EventAdapter eventAdapter;
-    private  List<EventCreate>eventList;
+    private  List<EventCreates>eventList;
     private RecyclerView recyclerView;
     private ProgressDialog progressDialog;
 
@@ -60,8 +65,7 @@ public class EventFragment extends Fragment {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         loadEventListFromDatabase();
-        eventAdapter = new EventAdapter(getActivity(),eventList);
-        recyclerView.setAdapter(eventAdapter);
+
 
         openBottomsheetBtn = view.findViewById(R.id.openBottomSheet);
         openBottomsheetBtn.setOnClickListener(new View.OnClickListener() {
@@ -100,30 +104,21 @@ public class EventFragment extends Fragment {
     }
 
     private void loadEventListFromDatabase() {
-        DatabaseRef.userRef.child(userId).child("Events").addChildEventListener(new ChildEventListener() {
+        DatabaseRef.userRef.child(userId).child("Events").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                EventCreate eventCreate = dataSnapshot.getValue(EventCreate.class);
-                eventList.add(eventCreate);
-                progressDialog.dismiss();
-                eventAdapter.notifyDataSetChanged();
-
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                eventList.clear();
+                if(!dataSnapshot.exists()){
+                    progressDialog.dismiss();
+                }else {
+                    for(DataSnapshot d: dataSnapshot.getChildren()){
+                        EventCreates events = d.getValue(EventCreates.class);
+                        eventList.add(events);
+                        eventAdapter = new EventAdapter(getActivity(),eventList);
+                        recyclerView.setAdapter(eventAdapter);
+                        progressDialog.dismiss();
+                    }
+                }
             }
 
             @Override
@@ -132,28 +127,33 @@ public class EventFragment extends Fragment {
             }
         });
 
+
     }
 
-    private void validationAndSend() {
 
+
+
+
+
+    private void validationAndSend() {
         String eventName = eventNameEt.getText().toString();
         String fromDate = fromDateEt.getText().toString();
         String toDate = toDateEt.getText().toString();
-        String budget = esatimateBudgetEt.getText().toString();
-        if(eventName.isEmpty() || fromDate.isEmpty() || toDate.isEmpty() || budget.isEmpty()){
+        String budgets = esatimateBudgetEt.getText().toString();
+        Double budget = Double.valueOf(budgets);
+        if(eventName.isEmpty() || fromDate.isEmpty() || toDate.isEmpty() || budget.equals(0.0)){
             Toasty.warning(getActivity(),"Please fill all the field",Toast.LENGTH_SHORT,false).show();
         }else{
             saveEventToDatabase(eventName,fromDate,toDate,budget);
-            Toasty.info(getActivity(),"Event created",Toast.LENGTH_SHORT,false).show();
+
 
         }
     }
 
-    private void saveEventToDatabase(String eventName,String fromDate,String toDate,String budget) {
-        EventCreate eventDetails = new EventCreate(eventName,fromDate,toDate,budget);
-        firebaseAuth = FirebaseAuth.getInstance();
-        userId = firebaseAuth.getCurrentUser().getUid();
-        DatabaseRef.userRef.child(userId).child("Events").push().setValue(eventDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+    private void saveEventToDatabase(String eventName,String fromDate,String toDate,Double budget) {
+        eventId = DatabaseRef.userRef.child(userId).child("Events").push().getKey();
+        EventCreates eventDetails = new EventCreates(eventId,eventName,fromDate,toDate,budget);
+        DatabaseRef.userRef.child(userId).child("Events").child(eventId).setValue(eventDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){

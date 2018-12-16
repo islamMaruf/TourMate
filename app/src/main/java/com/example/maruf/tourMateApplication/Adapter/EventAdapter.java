@@ -1,4 +1,4 @@
-package com.example.maruf.tourMateApplication;
+package com.example.maruf.tourMateApplication.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,17 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
+import com.example.maruf.tourMateApplication.Activity.EventDetailsActivity;
+import com.example.maruf.tourMateApplication.ProjoPackage.EventCreates;
+import com.example.maruf.tourMateApplication.R;
 
-import es.dmoral.toasty.Toasty;
+import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.CustomViewHolder> {
     private Context context;
-    private  List<EventCreate> eventCreateList;
+    private  List<EventCreates> eventCreatesList;
 
-    public EventAdapter(Context context, List<EventCreate> eventCreateList){
+    public EventAdapter(Context context, List<EventCreates> eventCreatesList){
         this.context = context;
-        this.eventCreateList = eventCreateList;
+        this.eventCreatesList = eventCreatesList;
 
     }
 
@@ -37,16 +39,17 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.CustomViewHo
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int i) {
-        final EventCreate currentEvent = eventCreateList.get(i);
+        final EventCreates currentEvent = eventCreatesList.get(i);
         holder.eventName.setText(currentEvent.getEventName());
         holder.fromDate.setText(currentEvent.getFromDate());
         holder.toDate.setText(currentEvent.getToDate());
-        holder.estimateBudget.setText(currentEvent.getEstimatedBudget() +" Tk");
+        holder.estimateBudget.setText(currentEvent.getEstimatedBudget() +" BDT");
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,EventDetails.class);
-                intent.putExtra("event",currentEvent.getEventName());
+                Intent intent = new Intent(context,EventDetailsActivity.class);
+                intent.putExtra("eventName",currentEvent.getEventName());
+                intent.putExtra("eventId",currentEvent.getId());
                 context.startActivity(intent);
 
             }
@@ -58,7 +61,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.CustomViewHo
 
     @Override
     public int getItemCount() {
-        return eventCreateList.size();
+        return eventCreatesList.size();
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder{
