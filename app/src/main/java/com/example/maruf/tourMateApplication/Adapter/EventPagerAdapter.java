@@ -26,7 +26,9 @@ public class EventPagerAdapter extends FragmentPagerAdapter {
                 return  expensesFragment;
 
             case 1:
-                return new MemorablePlacesFragment();
+                Fragment memorablePlacesFragment = new MemorablePlacesFragment();
+                memorablePlacesFragment.setArguments(bundle);
+                return  memorablePlacesFragment;
             default:
                 return null;
         }

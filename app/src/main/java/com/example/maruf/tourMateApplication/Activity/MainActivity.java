@@ -2,6 +2,8 @@ package com.example.maruf.tourMateApplication.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -11,11 +13,15 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.example.maruf.tourMateApplication.Adapter.PageAdapter;
 import com.example.maruf.tourMateApplication.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.UploadTask;
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -82,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main,menu);
         return super.onCreateOptionsMenu(menu);
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

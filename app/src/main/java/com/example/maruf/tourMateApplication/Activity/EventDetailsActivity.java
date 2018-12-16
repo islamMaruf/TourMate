@@ -1,14 +1,25 @@
 package com.example.maruf.tourMateApplication.Activity;
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
+
 import com.example.maruf.tourMateApplication.Adapter.EventPagerAdapter;
 import com.example.maruf.tourMateApplication.R;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import es.dmoral.toasty.Toasty;
+
 
 public class EventDetailsActivity extends AppCompatActivity {
     private Toolbar eToolbar;
@@ -67,8 +78,10 @@ public class EventDetailsActivity extends AppCompatActivity {
         });
 
         eventViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(eTabLayout));
+    }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
     }
 }
