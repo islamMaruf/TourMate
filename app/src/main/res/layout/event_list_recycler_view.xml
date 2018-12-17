@@ -62,7 +62,6 @@
 
         </LinearLayout>
         <TextView
-            android:layout_marginTop="15dp"
             android:layout_gravity="center_horizontal"
             android:id="@+id/estimateBudgetTv"
             android:layout_width="wrap_content"

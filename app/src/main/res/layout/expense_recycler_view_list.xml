@@ -12,6 +12,7 @@
         android:weightSum="2"
         >
         <TextView
+            android:textAllCaps="true"
             android:textColor="@color/black"
             android:fontFamily="@font/roboto_regular"
             android:textSize="21sp"
@@ -22,6 +23,7 @@
             android:textAlignment="center"
             />
         <TextView
+            android:textAllCaps="true"
             android:id="@+id/expenseListDetailsTv"
             android:textColor="@color/black"
             android:fontFamily="@font/roboto_regular"

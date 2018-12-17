@@ -123,7 +123,7 @@ public View onCreateView(LayoutInflater inflater, final ViewGroup container,
     try {
         double expenseAmount = Double.parseDouble(ammount);
         double balance = budget;
-        if(expenseAmount < balance){
+        if(expenseAmount <= balance){
             final double rest = balance-expenseAmount;
             DatabaseRef.userRef.child(userId).child("Events").child(eventId).child("estimatedBudget").setValue(rest).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
