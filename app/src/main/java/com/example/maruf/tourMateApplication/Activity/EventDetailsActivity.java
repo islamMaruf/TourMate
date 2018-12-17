@@ -11,14 +11,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
+
 
 import com.example.maruf.tourMateApplication.Adapter.EventPagerAdapter;
 import com.example.maruf.tourMateApplication.R;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-import es.dmoral.toasty.Toasty;
 
 
 public class EventDetailsActivity extends AppCompatActivity {
@@ -35,10 +32,10 @@ public class EventDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String toolbarName = intent.getStringExtra("eventName");
         String eventId = intent.getStringExtra("eventId");
-        String budget = intent.getStringExtra("eventBudget");
+        Double budget = intent.getDoubleExtra("eventBudget",0);
         Bundle bundle = new Bundle();
         bundle.putString("id",eventId);
-        bundle.putString("budgetId",budget);
+        bundle.putDouble("budgetId",budget);
         eToolbar = findViewById(R.id.eventToolbar);
         eToolbar.setTitle(toolbarName);
         setSupportActionBar(eToolbar);

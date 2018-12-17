@@ -43,7 +43,7 @@ private FloatingActionButton openBottomsheetExpenseBtn;
 private EditText details,amount;
 private  Button expenseBtn;
 private String eventId;
-String budget;
+double budget;
 private RecyclerView recyclerView;
 private ProgressDialog progressDialog;
 private List<Expenses> expensesList;
@@ -56,7 +56,7 @@ public View onCreateView(LayoutInflater inflater, final ViewGroup container,
     expensesList = new ArrayList<>();
     Bundle bundle = getArguments();
     eventId = bundle.getString("id");
-    budget = bundle.getString("budgetId");
+    budget = bundle.getDouble("budgetId");
     firebaseAuth = FirebaseAuth.getInstance();
     userId = firebaseAuth.getCurrentUser().getUid();
     recyclerView = view.findViewById(R.id.expensesRecyclerView);
@@ -120,41 +120,48 @@ public View onCreateView(LayoutInflater inflater, final ViewGroup container,
     private void validateAndSend() {
     String expenseDetails = details.getText().toString();
     String ammount = amount.getText().toString();
-    double expenseAmount = Double.parseDouble(ammount);
-    double balance = Double.parseDouble(budget);
-    if(expenseAmount < balance){
-        final double rest = balance-expenseAmount;
-        DatabaseRef.userRef.child(userId).child("Events").child(eventId).child("estimatedBudget").setValue(rest).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    bottomSheetDialog.dismiss();
-                    Toasty.info(getActivity(),"Current Balance"+rest,Toast.LENGTH_SHORT).show();
-                }else {
-                    bottomSheetDialog.dismiss();
-                    Toasty.error(getActivity(),task.getException().getMessage(),Toast.LENGTH_SHORT,false).show();
+    try {
+        double expenseAmount = Double.parseDouble(ammount);
+        double balance = budget;
+        if(expenseAmount < balance){
+            final double rest = balance-expenseAmount;
+            DatabaseRef.userRef.child(userId).child("Events").child(eventId).child("estimatedBudget").setValue(rest).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        bottomSheetDialog.dismiss();
+                        Toasty.info(getActivity(),"Current Balance"+rest,Toast.LENGTH_SHORT).show();
+                    }else {
+                        bottomSheetDialog.dismiss();
+                        Toasty.error(getActivity(),task.getException().getMessage(),Toast.LENGTH_SHORT,false).show();
+
+                    }
 
                 }
+            });
+            Expenses expenses = new Expenses(expenseDetails,expenseAmount);
+            DatabaseRef.userRef.child(userId).child("Events").child(eventId).child("Expense").push().setValue(expenses).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
 
-            }
-        });
-        Expenses expenses = new Expenses(expenseDetails,expenseAmount);
-        DatabaseRef.userRef.child(userId).child("Events").child(eventId).child("Expense").push().setValue(expenses).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    bottomSheetDialog.dismiss();
-                    Toasty.info(getActivity(),"Expenses added successfully",Toast.LENGTH_SHORT,false).show();
+                        Toasty.info(getActivity(),"Expenses added successfully",Toast.LENGTH_SHORT,false).show();
 
-                }else {
-                    bottomSheetDialog.dismiss();
-                    Toasty.warning(getActivity(),task.getException().getMessage(),Toast.LENGTH_SHORT,false).show();
+                    }else {
+                        Toasty.warning(getActivity(),task.getException().getMessage(),Toast.LENGTH_SHORT,false).show();
+                    }
                 }
-            }
-        });
-    }else {
-        Toasty.warning(getActivity(),"insufficient Balance",Toast.LENGTH_SHORT,false).show();
+            });
+        }else {
+            Toasty.warning(getActivity(),"insufficient Balance",Toast.LENGTH_SHORT,false).show();
+        }
+
+    }catch (Exception e){
+        Toasty.error(getActivity(),e.getMessage(),Toast.LENGTH_SHORT,false).show();
+
     }
+
+
 
 }
 
