@@ -130,7 +130,7 @@ public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         bottomSheetDialog.dismiss();
-                        Toasty.info(getActivity(),"Current Balance"+rest,Toast.LENGTH_SHORT).show();
+                        Toasty.info(getActivity(),"Expense added balance:"+rest+" BDT",Toast.LENGTH_SHORT).show();
                     }else {
                         bottomSheetDialog.dismiss();
                         Toasty.error(getActivity(),task.getException().getMessage(),Toast.LENGTH_SHORT,false).show();
@@ -144,8 +144,6 @@ public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
-
-                        Toasty.info(getActivity(),"Expenses added successfully",Toast.LENGTH_SHORT,false).show();
 
                     }else {
                         Toasty.warning(getActivity(),task.getException().getMessage(),Toast.LENGTH_SHORT,false).show();

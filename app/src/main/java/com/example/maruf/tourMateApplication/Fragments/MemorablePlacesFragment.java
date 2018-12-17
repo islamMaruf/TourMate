@@ -33,19 +33,6 @@ public class MemorablePlacesFragment extends Fragment {
         return view;
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        try{
-            if (requestCode == 1 && resultCode ==Activity.RESULT_OK){
-                Uri uri = data.getData();
-                final StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("MemorablePhotos").child(uri.getLastPathSegment());
-                storageReference.putFile(uri);
-                Toast.makeText(getActivity(), "picture add", Toast.LENGTH_SHORT).show();
-            }
 
-        }catch (Exception e){
-            Toasty.error(this.getActivity(),e.getMessage(),Toast.LENGTH_SHORT).show();
-        }
-    }
 }
 
