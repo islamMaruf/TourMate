@@ -1,6 +1,7 @@
 package com.example.maruf.tourMateApplication.Fragments;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,6 +13,10 @@ import android.widget.Toast;
 import com.example.maruf.tourMateApplication.R;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.io.ByteArrayOutputStream;
+import java.util.concurrent.TimeUnit;
+
 import es.dmoral.toasty.Toasty;
 
 
@@ -36,10 +41,15 @@ public class MemorablePlacesFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try{
-            if (requestCode == 1 && resultCode ==Activity.RESULT_OK){
-                Uri uri = data.getData();
-                final StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("MemorablePhotos").child(uri.getLastPathSegment());
-                storageReference.putFile(uri);
+            if (requestCode == 1 && resultCode == Activity.RESULT_OK){
+                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
+                byte[] uri = byteArrayOutputStream.toByteArray();
+
+                final StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("MemorablePhotos").child("photos_"+System.currentTimeMillis());
+                storageReference.putBytes(uri);
+
                 Toast.makeText(getActivity(), "picture add", Toast.LENGTH_SHORT).show();
             }
 

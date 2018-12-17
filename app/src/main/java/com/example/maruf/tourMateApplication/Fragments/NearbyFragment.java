@@ -117,7 +117,6 @@ public class NearbyFragment extends Fragment {
                 if(response.code() == 200){
                     NearbyResponse nearbyResponse =  response.body();
                     results = nearbyResponse.getResults();
-
                     nearbyAdapter = new NearbyAdapter(results,getActivity());
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                     recyclerView.setAdapter(nearbyAdapter);
