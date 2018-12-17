@@ -77,8 +77,5 @@ public class EventDetailsActivity extends AppCompatActivity {
         eventViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(eTabLayout));
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-    }
 }

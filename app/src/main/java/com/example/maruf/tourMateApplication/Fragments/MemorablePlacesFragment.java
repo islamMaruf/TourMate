@@ -1,6 +1,7 @@
 package com.example.maruf.tourMateApplication.Fragments;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,6 +13,10 @@ import android.widget.Toast;
 import com.example.maruf.tourMateApplication.R;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.io.ByteArrayOutputStream;
+import java.util.concurrent.TimeUnit;
+
 import es.dmoral.toasty.Toasty;
 
 
@@ -32,6 +37,7 @@ public class MemorablePlacesFragment extends Fragment {
         });
         return view;
     }
+
 
 
 }
