@@ -99,13 +99,15 @@ public View onCreateView(LayoutInflater inflater, final ViewGroup container,
             if(!dataSnapshot.exists()){
                 progressDialog.dismiss();
             }else{
-                for (DataSnapshot d: dataSnapshot.getChildren()){
+                for (DataSnapshot d : dataSnapshot.getChildren()){
                     Expenses expenses = d.getValue(Expenses.class);
                     expensesList.add(expenses);
-                    expenseAdapter = new ExpenseListAdapter(getActivity(),expensesList);
-                    recyclerView.setAdapter(expenseAdapter);
                     progressDialog.dismiss();
+
+
                 }
+                expenseAdapter = new ExpenseListAdapter(getActivity(),expensesList);
+                recyclerView.setAdapter(expenseAdapter);
             }
 
         }
@@ -130,7 +132,7 @@ public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         bottomSheetDialog.dismiss();
-                        Toasty.info(getActivity(),"Expense added balance:"+rest+" BDT",Toast.LENGTH_SHORT).show();
+                        Toasty.info(getActivity(),"Expense added balance:"+rest+" BDT",Toast.LENGTH_SHORT,false).show();
                     }else {
                         bottomSheetDialog.dismiss();
                         Toasty.error(getActivity(),task.getException().getMessage(),Toast.LENGTH_SHORT,false).show();

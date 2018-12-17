@@ -34,6 +34,12 @@
         <item name="android:textColorPrimary">@color/iron</item>
         <item name="android:background">@color/colorNearbyPrimary</item>
     </style>
+    <style name="AppTheme.Dark.DialogMemorable" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColorPrimary">@color/iron</item>
+        <item name="android:background">@color/colorMemorableDark</item>
+    </style>
+
     <style name="AppTheme.Dark.DialogYellow" parent="Theme.AppCompat.Dialog">
         <item name="colorAccent">@color/white</item>
         <item name="android:textColorPrimary">@color/iron</item>

@@ -45,7 +45,7 @@ public class NearbyAdapter extends RecyclerView.Adapter< NearbyAdapter.ViewHolde
             viewHolder.placeAddress.setText(results.get(i).getVicinity());
 
         }catch (Exception e){
-            Log.e("LOG5689",e.getMessage());
+
         }
 
 
@@ -68,4 +68,5 @@ public class NearbyAdapter extends RecyclerView.Adapter< NearbyAdapter.ViewHolde
 
         }
     }
+
 }

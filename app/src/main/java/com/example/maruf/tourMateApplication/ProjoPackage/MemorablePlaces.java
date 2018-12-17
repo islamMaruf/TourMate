@@ -1,15 +1,22 @@
 package com.example.maruf.tourMateApplication.ProjoPackage;
-
-import android.net.Uri;
-
 public class MemorablePlaces {
- private    Uri uri;
+    private String memorablePlacesId;
+    private String downloadUrl;
 
-    public MemorablePlaces(Uri uri) {
-        this.uri = uri;
+    public MemorablePlaces(){
+
+    };
+
+    public MemorablePlaces(String memorablePlacesId, String downloadUrl) {
+        this.memorablePlacesId = memorablePlacesId;
+        this.downloadUrl = downloadUrl;
     }
 
-    public Uri getUri() {
-        return uri;
+    public String getMemorablePlacesId() {
+        return memorablePlacesId;
+    }
+
+    public String getDownloadUrl() {
+        return downloadUrl;
     }
 }
