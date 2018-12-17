@@ -121,8 +121,25 @@ public View onCreateView(LayoutInflater inflater, final ViewGroup container,
     String expenseDetails = details.getText().toString();
     String ammount = amount.getText().toString();
     double expenseAmount = Double.parseDouble(ammount);
-    Expenses expenses = new Expenses(expenseDetails,expenseAmount);
-    DatabaseRef.userRef.child(userId).child("Events").child(eventId).child("Expense").push().setValue(expenses).addOnCompleteListener(new OnCompleteListener<Void>() {
+    double balance = Double.parseDouble(budget);
+    if(expenseAmount < balance){
+        final double rest = balance-expenseAmount;
+        DatabaseRef.userRef.child(userId).child("Events").child(eventId).child("estimatedBudget").setValue(rest).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    bottomSheetDialog.dismiss();
+                    Toasty.info(getActivity(),"Current Balance"+rest,Toast.LENGTH_SHORT).show();
+                }else {
+                    bottomSheetDialog.dismiss();
+                    Toasty.error(getActivity(),task.getException().getMessage(),Toast.LENGTH_SHORT,false).show();
+
+                }
+
+            }
+        });
+        Expenses expenses = new Expenses(expenseDetails,expenseAmount);
+        DatabaseRef.userRef.child(userId).child("Events").child(eventId).child("Expense").push().setValue(expenses).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
@@ -135,6 +152,10 @@ public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                 }
             }
         });
+    }else {
+        Toasty.warning(getActivity(),"insufficient Balance",Toast.LENGTH_SHORT,false).show();
+    }
+
 }
 
 
