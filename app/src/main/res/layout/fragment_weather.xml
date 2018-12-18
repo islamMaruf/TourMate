@@ -25,8 +25,7 @@
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_regular"
-                android:text="12.12.2018"
+                android:fontFamily="@font/roboto_light"
                 android:id="@+id/dateId"
 
                 />
@@ -34,14 +33,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:textSize="56sp"
-                android:fontFamily="@font/roboto_bold"
-                android:text="16:01"
+                android:textSize="28sp"
+                android:fontFamily="@font/roboto_light"
+                android:id="@+id/weatherTimeTv"
+
                 />
         </LinearLayout>
     </LinearLayout>
     <TextView
-        android:id="@+id/dhaka"
+        android:id="@+id/weatherlocationTv"
         android:textColor="@color/black"
         android:drawableLeft="@drawable/location"
         android:drawablePadding="5dp"
@@ -49,21 +49,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="22sp"
-        android:fontFamily="@font/roboto_regular"
-        android:text="Dhaka"
+        android:fontFamily="@font/roboto_light"
         />
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="2">
-        <ImageView
+        <LinearLayout
             android:layout_gravity="center_vertical"
-            android:layout_width="146dp"
-            android:layout_height="146dp"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:src="@drawable/cloud"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/weatherImage"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="146dp"
+                android:layout_height="146dp"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:textAllCaps="true"
+                android:id="@+id/weatherImageDescription"
+                android:layout_gravity="center_horizontal"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_light"/>
+        </LinearLayout>
         <LinearLayout
             android:layout_marginRight="15dp"
             android:padding="-5dp"
@@ -78,8 +94,8 @@
                 android:id="@+id/temperatureTV"
                 android:textColor="@color/black"
                 android:textSize="48sp"
-                android:fontFamily="@font/roboto_bold"
-                android:text="27.0 C"
+                android:fontFamily="@font/roboto_light"
+
                 />
             <TextView
                 android:drawableLeft="@drawable/min_temp"
@@ -90,8 +106,8 @@
                 android:id="@+id/maxTemperatureTV"
                 android:textColor="@color/black"
                 android:textSize="24sp"
-                android:fontFamily="@font/roboto_regular"
-                android:text="23.0 C"
+                android:fontFamily="@font/roboto_light"
+
                 />
             <TextView
                 android:drawableLeft="@drawable/max_temp"
@@ -102,8 +118,8 @@
                 android:id="@+id/minTemperatureTV"
                 android:textColor="@color/black"
                 android:textSize="24sp"
-                android:fontFamily="@font/roboto_regular"
-                android:text="28.0 C"
+                android:fontFamily="@font/roboto_light"
+
                 />
             <TextView
                 android:drawableLeft="@drawable/breeze"
@@ -114,8 +130,7 @@
                 android:id="@+id/windTV"
                 android:textColor="@color/black"
                 android:textSize="24sp"
-                android:fontFamily="@font/roboto_regular"
-                android:text="24.1 km/h"
+                android:fontFamily="@font/roboto_light"
                 />
             <TextView
                 android:drawableLeft="@drawable/wind"
@@ -126,8 +141,7 @@
                 android:id="@+id/pressuereTV"
                 android:textColor="@color/black"
                 android:textSize="24sp"
-                android:fontFamily="@font/roboto_regular"
-                android:text="1010.0"
+                android:fontFamily="@font/roboto_light"
                 />
 
 
