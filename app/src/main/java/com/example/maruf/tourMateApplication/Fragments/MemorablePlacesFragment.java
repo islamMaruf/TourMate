@@ -63,7 +63,7 @@ public class MemorablePlacesFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         userId = firebaseAuth.getCurrentUser().getUid();
         recyclerView = view.findViewById(R.id.memorableRecycler);
-        memorablePlacesList = new ArrayList();
+        memorablePlacesList = new ArrayList<MemorablePlaces>();
         loadMemorablePlaceListFromDatabase();
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
         clickCamera = view.findViewById(R.id.clickCamera);
