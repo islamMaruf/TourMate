@@ -43,6 +43,10 @@ import es.dmoral.toasty.Toasty;
 
 
 public class MemorablePlacesFragment extends Fragment {
+
+    public MemorablePlacesFragment() {
+    }
+
     private FirebaseAuth firebaseAuth;
     private String userId;
     private String memorablePlacesId;

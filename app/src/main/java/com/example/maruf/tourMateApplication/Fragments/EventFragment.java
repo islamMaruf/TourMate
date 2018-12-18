@@ -35,6 +35,9 @@ import es.dmoral.toasty.Toasty;
 
 public class EventFragment extends Fragment {
 
+    public EventFragment() {
+
+    }
     private FloatingActionButton openBottomsheetBtn;
     private EditText eventNameEt,fromDateEt,toDateEt,esatimateBudgetEt;
     private Button addEventEt;

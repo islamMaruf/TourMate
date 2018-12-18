@@ -78,7 +78,6 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-
                     String userId = firebaseAuth.getCurrentUser().getUid();
                     Users user = new Users(email,password);
                     DatabaseRef.userRef.child(userId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -99,6 +98,7 @@ public class SignUpActivity extends AppCompatActivity {
                     });
 
                 }else{
+                    progressDialog.dismiss();
                     Toasty.warning(SignUpActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT,false).show();
 
                 }

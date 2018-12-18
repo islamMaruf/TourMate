@@ -38,6 +38,8 @@ import retrofit2.Response;
 
 
 public class NearbyFragment extends Fragment {
+    public NearbyFragment() {
+    }
 
     private ApiService service;
     double lat,lan;
@@ -120,7 +122,6 @@ public class NearbyFragment extends Fragment {
                     nearbyAdapter = new NearbyAdapter(results,getActivity());
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                     recyclerView.setAdapter(nearbyAdapter);
-
                 }
             }
 

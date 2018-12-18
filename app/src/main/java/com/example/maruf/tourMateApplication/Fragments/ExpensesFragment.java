@@ -49,6 +49,8 @@ private ProgressDialog progressDialog;
 private List<Expenses> expensesList;
 
 private ExpenseListAdapter expenseAdapter;
+
+
 @Override
 public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                          Bundle savedInstanceState) {
